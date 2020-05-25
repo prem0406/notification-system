@@ -1,0 +1,24 @@
+<form class="submission-form" [formGroup]="userForm"
+(ngSubmit)="onFormSubmit()">
+
+<h2>User Login</h2>
+  
+    <label for="username">
+      Username
+    </label>
+    
+    <input type="text" id="username" formControlName= "username">
+    
+    <label for="password">
+      Password
+    </label>
+    
+    <input type="password" id="lastName" formControlName= "password">
+    
+   
+    <input type="submit" value="Login" id="sendBtn">
+    <button type="button" id="signup"><a routerLink="/registration">Sign Up</a></button>
+    
+    
+    
+  </form>
