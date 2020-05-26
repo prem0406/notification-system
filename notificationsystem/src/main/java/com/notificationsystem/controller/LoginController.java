@@ -1,5 +1,6 @@
 package com.notificationsystem.controller;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -8,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.notificationsystem.dto.EmployeeRegistrationDTO;
@@ -74,30 +76,38 @@ public class LoginController {
 	}
 	
 	@GetMapping("subscribe/{id}")
-	public void subscribe(@PathVariable Long id) {
-		
+	public void subscribe(@PathVariable Long id, @RequestParam List<String> values) {
 		Employee emp = employeeService.getEmployeeByID(id);
 		
-		if (emp != null) {
-			urgentHelpObservable.subscribe(emp);
-		} else {
-			throw new NullPointerException();
-		}
+		values.stream().filter(m -> m.equals(NotificationType.EVENT.toString())).findFirst()
+		.ifPresent(m -> eventObservable.subscribe(emp));
+		
+		values.stream().filter(m -> m.equals(NotificationType.URGENT_HELP.toString())).findFirst()
+		.ifPresent(m -> urgentHelpObservable.subscribe(emp));
+		
+		values.stream().filter(m -> m.equals(NotificationType.HOLIDAY.toString())).findFirst()
+		.ifPresent(m -> holidayObservable.subscribe(emp));
+		
+		values.stream().filter(m -> m.equals(NotificationType.NAGARRO_NEWS.toString())).findFirst()
+		.ifPresent(m -> nagarroNewsObservable.subscribe(emp));
+		
+		values.stream().filter(m -> m.equals(NotificationType.NEW_POLICY.toString())).findFirst()
+		.ifPresent(m -> newPolicyObservable.subscribe(emp));
 		
 	}
 	
-	@GetMapping("unsubscribe/{id}")
-	public void unsubscribe(@PathVariable Long id) {
-		Employee emp = employeeService.getEmployeeByID(id);
-		
-		if (emp != null) {
-			urgentHelpObservable.unsubscribe(emp);
-			
-		} else {
-			throw new NullPointerException();
-		}
-		
-	}
+//	@GetMapping("unsubscribe/{id}")
+//	public void unsubscribe(@PathVariable Long id) {
+//		Employee emp = employeeService.getEmployeeByID(id);
+//		
+//		if (emp != null) {
+//			urgentHelpObservable.unsubscribe(emp);
+//			
+//		} else {
+//			throw new NullPointerException();
+//		}
+//		
+//	}
 	
 	@PostMapping("registration")
 	public void registerEmployee(@RequestBody EmployeeRegistrationDTO employeeDto) {

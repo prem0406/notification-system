@@ -16,7 +16,7 @@ import com.notificationsystem.service.SubscriberService;
 @Component
 public class UrgentHelpObservable implements Observable {
 
-private static final Long id = 2L;
+	private static final Long id = 2L;
 	
 	
 	Observer ob;
