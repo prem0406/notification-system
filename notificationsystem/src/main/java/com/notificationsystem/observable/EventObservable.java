@@ -1,43 +1,63 @@
 package com.notificationsystem.observable;
 
-import java.util.ArrayList;
 import java.util.List;
-
+import java.util.Optional;
+import org.springframework.stereotype.Component;
+import com.notificationsystem.model.Employee;
 import com.notificationsystem.model.Notification;
+import com.notificationsystem.model.Subscriber;
+import com.notificationsystem.observer.EmployeeObserver;
 import com.notificationsystem.observer.Observer;
+import com.notificationsystem.service.SubscriberService;
 
+@Component
 public class EventObservable implements Observable {
-	List<Observer> observers;
+
+	private static final Long id = 101L;
 	
-	private static EventObservable instance= new EventObservable();
 	
-	private EventObservable() {
-		this.observers = new ArrayList<Observer>();
+	Observer ob;
+	
+	List<Employee> employees;
+	
+	Subscriber subscribers;
+	
+	SubscriberService service;
+	
+	public EventObservable(SubscriberService service) {
+
+		this.service = service;
+		this.ob = new EmployeeObserver();
+		subscribers = service.findByID(id).get();
 	}
 	
-	public static EventObservable getInstance() {
-		return instance;
-	}
 	
 	@Override
-	public void subscribe(Observer observer) {
-		this.observers.add(observer);
+	public void subscribe(Employee employee) {
+
+		employee.getSubscriptionType().add(this.subscribers);
+		this.subscribers.getEmployees().add(employee);
+		
+		service.save(this.subscribers);
 		
 	}
-
 	@Override
-	public void unsubscribe(Observer observer) {
-		this.observers.remove(observer);
+	public void unsubscribe(Employee employee) {
+		
+		employee.getSubscriptionType().remove(this.subscribers);
+		this.subscribers.getEmployees().remove(employee);
+		
+		service.save(this.subscribers);
 		
 	}
 
 	@Override
 	public void notifyObservers(Notification notification) {
-		for (Observer ob: observers) {
-			ob.email(notification);
-			ob.update(notification);
+		Optional<Subscriber> op = service.findByID(id);
+		if(op.isPresent()) {
+			this.subscribers = op.get();
 		}
-		
+			ob.email(notification, this.subscribers.getEmployees());
+			ob.update(notification, this.subscribers.getEmployees());	
 	}
-
 }

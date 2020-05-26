@@ -1,20 +1,33 @@
 package com.notificationsystem.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "employee")
 public class Employee {
 	
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id")
 	private Long id;
+	
+	@ManyToMany(mappedBy = "employees", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    private List<Subscriber> subscriptionType = new ArrayList<Subscriber>();
+	
 	private String firstName;
 	private String lastName;
 	
@@ -22,7 +35,15 @@ public class Employee {
 	private String email;
 	private String phone;
 	private String officeLocation;
-//	private List<NotificationType> subscribedNotifications;
+
+	
+	
+	public List<Subscriber> getSubscriptionType() {
+		return subscriptionType;
+	}
+	public void setSubscriptionType(List<Subscriber> subscriptionType) {
+		this.subscriptionType = subscriptionType;
+	}
 	public Long getId() {
 		return id;
 	}
@@ -60,5 +81,9 @@ public class Employee {
 		this.officeLocation = officeLocation;
 	}
 	
-	
+	@Override
+	public boolean equals(Object anObject) {
+		Employee emp = (Employee) anObject;
+		return this.getId() == emp.getId();
+	}
 }
