@@ -2,6 +2,7 @@ package com.notificationsystem.observable;
 
 import java.util.List;
 import java.util.Optional;
+
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
@@ -13,9 +14,9 @@ import com.notificationsystem.observer.Observer;
 import com.notificationsystem.service.SubscriberService;
 
 @Component
-public class EventObservable implements Observable {
+public class UrgentHelpObservable implements Observable {
 
-	private static final Long id = 101L;
+private static final Long id = 2L;
 	
 	
 	Observer ob;
@@ -26,7 +27,7 @@ public class EventObservable implements Observable {
 	
 	SubscriberService service;
 	
-	public EventObservable(SubscriberService service) {
+	public UrgentHelpObservable(SubscriberService service) {
 
 		this.service = service;
 		this.ob = new EmployeeObserver();
@@ -60,6 +61,7 @@ public class EventObservable implements Observable {
 			this.subscribers = op.get();
 		}
 			ob.email(notification, this.subscribers.getEmployees());
-			ob.update(notification, this.subscribers.getEmployees());	
+			ob.sms(notification, this.subscribers.getEmployees());	
 	}
+
 }
