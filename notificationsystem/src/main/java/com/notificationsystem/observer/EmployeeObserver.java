@@ -14,14 +14,14 @@ public class EmployeeObserver implements Observer {
 	@Override
 	public void update(Notification notification, List<Employee> employees) {
 		for (Employee employee: employees) {
-			System.out.println("Portal: "+notification  + employee.getId());
+			System.out.println("Portal of: "+ "Employee ID: "+ employee.getId() + ": " + notification.getType() + ": " +notification);
 		}
 	}
 
 	@Override
 	public void email(Notification notification, List<Employee> employees) {
 		for (Employee employee: employees) {
-			System.out.println("Email: "+notification + employee.getEmail());
+			System.out.println("Email to: "+ employee.getEmail() + ": " + notification.getType() + ": " +notification);
 		}
 
 	}
@@ -29,7 +29,7 @@ public class EmployeeObserver implements Observer {
 	@Override
 	public void sms(Notification notification, List<Employee> employees) {
 		for (Employee employee: employees) {
-			System.out.println("SMS: "+notification + employee.getPhone());
+			System.out.println("SMS to: "  + employee.getPhone() + ": " + notification.getType() + ": " +notification);
 		}
 
 	}
