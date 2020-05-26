@@ -3,7 +3,14 @@ package com.notificationsystem.model;
 public class Notification {
 	Long id;
 	String message;
+	NotificationType type;
 	
+	public NotificationType getType() {
+		return type;
+	}
+	public void setType(NotificationType type) {
+		this.type = type;
+	}
 	public Notification(Long id, String message) {
 		this.id = id;
 		this.message = message;
@@ -20,6 +27,11 @@ public class Notification {
 	public void setMessage(String message) {
 		this.message = message;
 	}
+	@Override
+	public String toString() {
+		return message;
+	}
+	
 	
 	
 }
