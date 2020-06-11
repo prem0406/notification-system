@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Notification } from 'src/app/models/notification.interface';
+import { NotificationService } from 'src/app/services/notification.service';
 
 @Component({
   selector: 'app-notification-control',
@@ -10,7 +11,7 @@ import { Notification } from 'src/app/models/notification.interface';
 export class NotificationControlComponent implements OnInit {
   userForm: FormGroup;
   notification: Notification;
-  constructor() { }
+  constructor(private service : NotificationService) { }
 
   ngOnInit(): void {
 
@@ -22,9 +23,13 @@ export class NotificationControlComponent implements OnInit {
 
 
   onFormSubmit(){
-    console.log(this.userForm.value);
+    // console.log(this.userForm.value);
     this.notification = this.userForm.value;
-    console.log(this.notification);
+    this.service.sendNotification(this.notification).subscribe(() =>
+    console.log('success..'), error => console.log('error...', error));
+    // console.log(this.notification);
+
+
   }
 
 }
