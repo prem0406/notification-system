@@ -1,7 +1,9 @@
-<form class="submission-form">
-    <label for="type">NOTIFICATION TYPE</lable>
+<form class="submission-form" [formGroup]="userForm" (ngSubmit)="onFormSubmit()">
+  <h1>SEND NOTIFICATION</h1>
+
+    <label for="type">NOTIFICATION TYPE</label>
     
-    <select name="type" id="type">
+    <select name="type" id="type" formControlName= "type">
         <option value="EVENT">EVENT</option>
         <option value="URGENT_HELP">URGENT HELP</option>
         <option value="HOLIDAY">HOLIDAY</option>
@@ -13,7 +15,7 @@
       NOTIFICATION Message
     </label>
     
-    <textarea id="message"></textarea>
+    <textarea id="message" formControlName= "message"></textarea>
     
     <input type="submit" value="Send" id="sendBtn">
 

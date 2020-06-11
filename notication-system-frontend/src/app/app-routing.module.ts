@@ -7,7 +7,7 @@ import { NotificationControlComponent } from './components/notification-control/
 
 const routes: Routes = [
   {path: '', component: UserLoginComponent, pathMatch: 'full'},
-  {path: 'registration', component: RegisterationComponent}
+  {path: 'registration', component: RegisterationComponent},
   {path: 'notification', component: NotificationControlComponent}
 ];
 

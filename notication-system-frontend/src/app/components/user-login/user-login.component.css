@@ -38,21 +38,15 @@ body{
     padding:.5rem;
     color:white;
     margin:1rem 0;
-    width:auto;
+    /* width:auto; */
     text-transform:uppercase;
     cursor:pointer;
     transition:.3s background ease;
-    
-    
-  }
-  #signup{
-    padding:.5rem;
-    font-size:18px;
-    border-radius:5px;
-    background:#e40611;
     display: inline;
-    margin-left: 20px;
+    border-radius:5px;
+    
   }
+
 
   #signup a{
     color: white;
@@ -60,8 +54,16 @@ body{
   }
 
   #sendBtn{
-    background:#343050;
-    display: inline;
+    background:#5941f3;
+  }
+
+  #signup{
+    /* padding:.5rem; */
+    /* font-size:18px; */
+    /* border-radius:5px; */
+    background:#e40611;
+    
+    margin-left: 20px;
   }
 
 
